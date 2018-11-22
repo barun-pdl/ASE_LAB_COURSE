@@ -1,3 +1,8 @@
+/* ******DOCUMENTATION SECTION************
+Here the only change to be made is to give the correct ID.
+As per the Message Catalog, the values are changed accordingly
+*/
+
 #include "jdp.h"
 
 void CANMsgBufInit(void)
@@ -13,7 +18,7 @@ void CANMsgBufInit(void)
 /********************************************************************
  *               CAN message buffer configuration                   *
  ********************************************************************/
-    /* Buffer 0 */
+    /* Buffer 0 will be used as LIGHT SENSOR VALUE*/
     /* MB Code */
     CAN_0.BUF[0].CS.B.CODE = 8;
     /* Standard format */
@@ -25,9 +30,9 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[0].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[0].ID.B.STD_ID = 0x01; /* Change to the correct ID! */
+    CAN_0.BUF[0].ID.B.STD_ID = 0x101; /* UPDATED */
 
-    /* Buffer 1 */
+    /* Buffer 1 will be used for DOOR SENSOR VALUE */
     /* MB Code */
     CAN_0.BUF[1].CS.B.CODE = 8;
     /* Standard format */
@@ -39,9 +44,9 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[1].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[1].ID.B.STD_ID = 0x02; /* Change to the correct ID! */
+    CAN_0.BUF[1].ID.B.STD_ID = 0x102; /* UPDATED */
     
-    /* Buffer 2 */
+    /* Buffer 2 will be used for FUEL LEVEL WARNING */
     /* MB Code */
     CAN_0.BUF[2].CS.B.CODE = 8;
     /* Standard format */
@@ -53,9 +58,9 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[2].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[2].ID.B.STD_ID = 0x03; /* Change to the correct ID! */
+    CAN_0.BUF[2].ID.B.STD_ID = 0x103; /* UPDATED */
     
-    /* Buffer 3 */
+    /* Buffer 3 will be used for ENGINE COOLING WARNING*/
     /* MB Code */
     CAN_0.BUF[3].CS.B.CODE = 8;
     /* Standard format */
@@ -67,9 +72,9 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[3].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[3].ID.B.STD_ID = 0x04; /* Change to the correct ID! */
+    CAN_0.BUF[3].ID.B.STD_ID = 0x104; /* UPDATED */
     
-    /* Buffer 4 */
+    /* Buffer 4 will be used for ALIVE SIGNAL FOR ECU1 */
     /* MB Code */
     CAN_0.BUF[4].CS.B.CODE = 8;
     /* Standard format */
@@ -81,9 +86,9 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[4].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[4].ID.B.STD_ID = 0x05; /* Change to the correct ID! */
+    CAN_0.BUF[4].ID.B.STD_ID = 0x105; /* UPDATED */
     
-    /* Buffer 5 */
+    /* Buffer 5 will be used for ERROR SIGNAL*/
     /* MB Code */
     CAN_0.BUF[5].CS.B.CODE = 8;
     /* Standard format */
@@ -95,7 +100,7 @@ void CANMsgBufInit(void)
     /* Data Length */
     CAN_0.BUF[5].CS.B.LENGTH = 2;
     /* STD_ID */
-    CAN_0.BUF[5].ID.B.STD_ID = 0x06; /* Change to the correct ID! */
+    CAN_0.BUF[5].ID.B.STD_ID = 0x106; /* UPDATED */
 
 /********************************************************************
  *                   CAN masking configuration                      *
