@@ -1,0 +1,4 @@
+[Application]
+LoaderTool=PPC
+ApplicationPath=C:\Users\ASE-Lab\Desktop\Unit2\Template\Template\output\SPC560P50_Test_GenCC_WindRiver.elf
+Format=ELF

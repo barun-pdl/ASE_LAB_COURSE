@@ -1,23 +1,12 @@
 /* ********** DOCUMENTATION SECTION********************** 
 This Code Performs the Following Functions
-TASK2: SUBTASK 3: To send the Speed Value continuously using CAN BUS
-It should contain a speed value between 0 and 300 km/h.
-To achieve this, two data bytes must be used, as a resolution of 9 bits is needed for the speed.
-The speed value should not exceed 300 km/h! Every time a message is sent the speed should be incremented by 5 km/h.
-When a speed of 300km/h is reached the speed should be decremented by 5 km/h to 0 km/h.
-
+TASK3: SUBTASK 1: Show the working functionality by toggling LED1
+when we receive a message with ID 0xFF.
 Created by Barun Pandhwal on 11/11/2018 	
 */   
 
 #include "init.h"
-
-// Declare Global Functions
-
-
-// Declare Global Variable
-int speed = 0;
-int exit_loop = 0; // 
-int state = 0; // DETERMINES INCREMENT (0) OR DECREMENT (1) SPEED
+int receive_id;
 
 /********************************************************************
  *                              main                                *
@@ -26,19 +15,10 @@ void main(void)
 {
     
     Init();						/* board initialization; CANBUS ALSO*/ 
-	PIT_ConfigureTimer(0,200); // Timer Configuration: Channel 0, 200 milisecond delay
-	LED0 = 1; // TEST LED FOR MESSAGE TRANSMISSION
-    PIT_StartTimer(0); //************** WHAT HAPPENS IF StartTimer triggers again before interrupt
-
-
-//	CAN_0.BUF[0].DATA.B[0] = 0x00; // INTIAL SPEED as ZERO  
-//	CAN_0.BUF[0].DATA.B[1] = 0x00;	
-	
-	// ASSUME THAT AT BEGINNING WE INCREMENT THE SPEED
-    for(;;)
+    LED1 = 1; 			// KEEP THE LED1 OFF initially
+	for(;;)
     {
-    //	exit_loop = 0;
-    //  PIT_StartTimer(0); //************** WHAT HAPPENS IF StartTimer triggers again before interrupt
+		
 	}
 	
 }
@@ -47,35 +27,7 @@ void main(void)
  void PITCHANNEL0() {
     /* clear flag */
     PIT.CH[0].TFLG.B.TIF = 1; 
-	//LED0 = ~LED0;
-	CAN_0.BUF[0].DATA.B[0] = speed; 
-	CAN_0.BUF[0].DATA.B[1] = (speed >> 8) & 0x01;  // To Display the 9th Bit
-    CAN_0.BUF[0].CS.B.CODE = 0xC ;
-
-	if (speed >= 0)
-	{
-		if (speed == 300)
-		{
-			state = 1; // DECREMENT STATE
-		}
-		if (state == 0) // INCREMENT STATE
-		{
-			speed += 5;
-            LED1 = ~LED1;
-		}
-		else   // IF STATE = 1 ==> DECREMENT
-		{
-			if (speed > 0)
-            {		
-                speed -= 5;
-                LED2 = ~LED2;
-            }
-            else if (speed == 0)
-			state = 0;   
-		}
-	}	
-	//PIT_StopTimer(0);
-}
+	}
 
 #pragma interrupt Ext_Isr
 #pragma section IrqSect RX address=0x040
@@ -93,7 +45,6 @@ void Ext_Isr() {
 	case 59:					 
             /* Timer Interrupt */
             PITCHANNEL0();
-	//		exit_loop = 1;
             break;
     case 68: // CLEARING THE INTERRUPTS FLAGS FOR MESSAGE BUFFER
 			CAN_0.IFRL.B.BUF00I = 1;
@@ -102,6 +53,11 @@ void Ext_Isr() {
 			CAN_0.IFRL.B.BUF03I = 1;
 			break;
 	case 69:// CLEARING THE INTERRUPTS FLAGS FOR MESSAGE BUFFER
+			receive_id = CAN_0.RXFIFO.ID.B.STD_ID 
+			if (receive_id == 0xFF) 
+			{
+				LED1 = ~LED1 ;
+			}
 			CAN_0.IFRL.B.BUF04I = 1;
 			CAN_0.IFRL.B.BUF05I = 1;
 			CAN_0.IFRL.B.BUF06I = 1;
